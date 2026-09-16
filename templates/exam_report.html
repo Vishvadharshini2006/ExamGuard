@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>ExamGuard | Examination Report</title>
+
+<style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+
+/* =====================================================
+   BODY
+===================================================== */
+
+body{
+
+    background:#f1f5f9;
+
+    color:#1e293b;
+
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header{
+
+    background:#2563eb;
+
+    color:white;
+
+    padding:18px 45px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    box-shadow:
+        0 3px 10px rgba(0,0,0,0.15);
+
+}
+
+
+.logo{
+
+    font-size:25px;
+
+    font-weight:bold;
+
+}
+
+
+.header-status{
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+    padding:8px 16px;
+
+    border-radius:20px;
+
+    font-size:14px;
+
+    font-weight:bold;
+
+}
+
+
+/* =====================================================
+   CONTAINER
+===================================================== */
+
+.container{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:35px 25px;
+
+}
+
+
+/* =====================================================
+   REPORT TITLE
+===================================================== */
+
+.report-heading{
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:15px;
+
+    box-shadow:
+        0 3px 12px rgba(0,0,0,0.08);
+
+    margin-bottom:25px;
+
+}
+
+
+.report-heading h1{
+
+    font-size:32px;
+
+    color:#0f172a;
+
+    margin-bottom:8px;
+
+}
+
+
+.report-heading p{
+
+    color:#64748b;
+
+    font-size:16px;
+
+}
+
+
+.candidate-name{
+
+    color:#2563eb;
+
+    font-weight:bold;
+
+}
+
+
+/* =====================================================
+   SUMMARY CARDS
+===================================================== */
+
+.summary-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:18px;
+
+    margin-bottom:25px;
+
+}
+
+
+.summary-card{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:12px;
+
+    box-shadow:
+        0 3px 10px rgba(0,0,0,0.07);
+
+}
+
+
+.summary-card h3{
+
+    font-size:13px;
+
+    color:#64748b;
+
+    text-transform:uppercase;
+
+    margin-bottom:12px;
+
+}
+
+
+.summary-value{
+
+    font-size:27px;
+
+    font-weight:bold;
+
+    color:#2563eb;
+
+}
+
+
+/* =====================================================
+   GENERAL CARD
+===================================================== */
+
+.card{
+
+    background:white;
+
+    border-radius:15px;
+
+    padding:30px;
+
+    box-shadow:
+        0 3px 12px rgba(0,0,0,0.08);
+
+    margin-bottom:25px;
+
+}
+
+
+.card h2{
+
+    font-size:22px;
+
+    color:#0f172a;
+
+    margin-bottom:22px;
+
+}
+
+
+/* =====================================================
+   EXAM DETAILS
+===================================================== */
+
+.details-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:20px;
+
+}
+
+
+.detail{
+
+    background:#f8fafc;
+
+    padding:18px;
+
+    border-radius:9px;
+
+}
+
+
+.detail-title{
+
+    font-size:13px;
+
+    color:#64748b;
+
+    margin-bottom:7px;
+
+}
+
+
+.detail-value{
+
+    font-weight:bold;
+
+    color:#0f172a;
+
+}
+
+
+/* =====================================================
+   INTEGRITY SECTION
+===================================================== */
+
+.integrity-layout{
+
+    display:grid;
+
+    grid-template-columns:220px 1fr;
+
+    gap:35px;
+
+    align-items:center;
+
+}
+
+
+/* =====================================================
+   SCORE CIRCLE
+===================================================== */
+
+.score-circle{
+
+    width:180px;
+
+    height:180px;
+
+    border-radius:50%;
+
+    border:14px solid #2563eb;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin:auto;
+
+}
+
+
+.score-number{
+
+    font-size:38px;
+
+    font-weight:bold;
+
+    color:#2563eb;
+
+}
+
+
+.score-label{
+
+    color:#64748b;
+
+    font-size:13px;
+
+}
+
+
+/* =====================================================
+   PROGRESS
+===================================================== */
+
+.progress-container{
+
+    margin-bottom:25px;
+
+}
+
+
+.progress-bar{
+
+    width:100%;
+
+    height:18px;
+
+    background:#e2e8f0;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+}
+
+
+.progress-fill{
+
+    height:100%;
+
+    width:{{ score }}%;
+
+    background:#2563eb;
+
+    border-radius:20px;
+
+}
+
+
+.integrity-message{
+
+    color:#475569;
+
+    line-height:1.6;
+
+}
+
+
+/* =====================================================
+   VIOLATION TABLE
+===================================================== */
+
+.violation-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    margin-top:20px;
+
+}
+
+
+.violation-table th{
+
+    background:#2563eb;
+
+    color:white;
+
+    padding:14px;
+
+    text-align:left;
+
+}
+
+
+.violation-table td{
+
+    padding:14px;
+
+    border-bottom:1px solid #ddd;
+
+}
+
+
+.violation-table tr:hover{
+
+    background:#f5f7fa;
+
+}
+
+
+/* =====================================================
+   NO VIOLATIONS
+===================================================== */
+
+.no-violations{
+
+    background:#f0fdf4;
+
+    color:#15803d;
+
+    padding:18px;
+
+    border-radius:8px;
+
+    font-weight:bold;
+
+}
+
+
+/* =====================================================
+   VIOLATION BADGE
+===================================================== */
+
+.violation-badge{
+
+    display:inline-block;
+
+    padding:5px 10px;
+
+    background:#fee2e2;
+
+    color:#b91c1c;
+
+    border-radius:15px;
+
+    font-size:12px;
+
+    font-weight:bold;
+
+}
+
+
+/* =====================================================
+   FOOTER ACTIONS
+===================================================== */
+
+.actions{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:15px;
+
+    margin-top:10px;
+
+}
+
+
+.dashboard-btn{
+
+    text-decoration:none;
+
+    background:#2563eb;
+
+    color:white;
+
+    padding:13px 30px;
+
+    border-radius:8px;
+
+    font-weight:bold;
+
+    transition:0.2s;
+
+}
+
+
+.dashboard-btn:hover{
+
+    background:#1d4ed8;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:900px){
+
+    .summary-grid{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+    }
+
+    .details-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .integrity-layout{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+
+@media(max-width:600px){
+
+    .summary-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .header{
+
+        padding:18px 20px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<div class="header">
+
+    <div class="logo">
+
+        🛡 ExamGuard
+
+    </div>
+
+
+    <div class="header-status">
+
+        ✓ Examination Completed
+
+    </div>
+
+</div>
+
+
+
+<div class="container">
+
+
+<!-- =====================================================
+     TITLE
+===================================================== -->
+
+<div class="report-heading">
+
+    <h1>
+
+        Examination Report
+
+    </h1>
+
+
+    <p>
+
+        Candidate:
+
+        <span class="candidate-name">
+
+            {{ candidate }}
+
+        </span>
+
+    </p>
+
+</div>
+
+
+
+<!-- =====================================================
+     SUMMARY
+===================================================== -->
+
+<div class="summary-grid">
+
+
+    <div class="summary-card">
+
+        <h3>
+            Integrity Score
+        </h3>
+
+        <div class="summary-value">
+
+            {{ score }}%
+
+        </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+        <h3>
+            Attempted
+        </h3>
+
+        <div class="summary-value">
+
+            {{ attempted }}/{{ total }}
+
+        </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+        <h3>
+            Total Questions
+        </h3>
+
+        <div class="summary-value">
+
+            {{ total }}
+
+        </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+        <h3>
+            Status
+        </h3>
+
+        <div class="summary-value">
+
+            {{ exam_status }}
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     EXAMINATION DETAILS
+===================================================== -->
+
+<div class="card">
+
+    <h2>
+
+        Examination Details
+
+    </h2>
+
+
+    <div class="details-grid">
+
+
+        <div class="detail">
+
+            <div class="detail-title">
+
+                Candidate
+
+            </div>
+
+            <div class="detail-value">
+
+                {{ report[0] }}
+
+            </div>
+
+        </div>
+
+
+        <div class="detail">
+
+            <div class="detail-title">
+
+                Session ID
+
+            </div>
+
+            <div class="detail-value">
+
+                {{ report[1] }}
+
+            </div>
+
+        </div>
+
+
+        <div class="detail">
+
+            <div class="detail-title">
+
+                Start Time
+
+            </div>
+
+            <div class="detail-value">
+
+                {{ report[2] }}
+
+            </div>
+
+        </div>
+
+
+        <div class="detail">
+
+            <div class="detail-title">
+
+                End Time
+
+            </div>
+
+            <div class="detail-value">
+
+                {{ report[3] }}
+
+            </div>
+
+        </div>
+
+
+        <div class="detail">
+
+            <div class="detail-title">
+
+                Questions Attempted
+
+            </div>
+
+            <div class="detail-value">
+
+                {{ attempted }} / {{ total }}
+
+            </div>
+
+        </div>
+
+
+        <div class="detail">
+
+            <div class="detail-title">
+
+                Examination Status
+
+            </div>
+
+            <div class="detail-value">
+
+                {{ exam_status }}
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     INTEGRITY ANALYSIS
+===================================================== -->
+
+<div class="card">
+
+    <h2>
+
+        Integrity Analysis
+
+    </h2>
+
+
+    <div class="integrity-layout">
+
+
+        <div>
+
+            <div class="score-circle">
+
+                <div class="score-number">
+
+                    {{ score }}%
+
+                </div>
+
+                <div class="score-label">
+
+                    Integrity
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div>
+
+            <div class="progress-container">
+
+                <div class="progress-bar">
+
+                    <div class="progress-fill"></div>
+
+                </div>
+
+            </div>
+
+
+            {% if score >= 90 %}
+
+            <p class="integrity-message">
+
+                <strong>
+                    Excellent Integrity
+                </strong>
+
+                <br>
+
+                No significant suspicious activity
+                was detected during the examination.
+
+            </p>
+
+
+            {% elif score >= 70 %}
+
+            <p class="integrity-message">
+
+                <strong>
+                    Moderate Integrity
+                </strong>
+
+                <br>
+
+                Some suspicious events were detected
+                during the examination. Review the
+                violation log for details.
+
+            </p>
+
+
+            {% else %}
+
+            <p class="integrity-message">
+
+                <strong>
+                    Integrity Alert
+                </strong>
+
+                <br>
+
+                Multiple suspicious events were
+                detected during the examination.
+                Further review may be required.
+
+            </p>
+
+            {% endif %}
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     VIOLATION LOG
+===================================================== -->
+
+<div class="card">
+
+    <h2>
+        Violation Log
+    </h2>
+
+
+    {% if events and events|length > 0 %}
+
+
+    <div class="table-container">
+
+        <table class="violation-table">
+
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Violation
+                    </th>
+
+                    <th>
+                        Timestamp
+                    </th>
+
+                    <th>
+                        Details
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+            {% for event in events %}
+
+
+                <tr>
+
+
+                    <td>
+
+                        {{ event[0] }}
+
+                    </td>
+
+
+                    <td>
+
+                        {{ event[1] }}
+
+                    </td>
+
+
+                    <td>
+
+                        {{ event[2]
+                           if event|length > 2
+                           and event[2]
+                           else
+                           "Detected during examination"
+                        }}
+
+                    </td>
+
+
+                </tr>
+
+
+            {% endfor %}
+
+
+            </tbody>
+
+
+        </table>
+
+    </div>
+
+
+    {% else %}
+
+
+        <div class="no-violations">
+
+            ✓ No violations were detected
+            during the examination.
+
+        </div>
+
+
+    {% endif %}
+
+
+</div>
+
+
+
+<!-- =====================================================
+     ACTION
+===================================================== -->
+
+<div class="actions">
+
+    <a href="{{ url_for('dashboard') }}"
+       class="dashboard-btn">
+
+        ← Return to Dashboard
+
+    </a>
+
+</div>
+
+
+</div>
+
+
+</body>
+
+</html>

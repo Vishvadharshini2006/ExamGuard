@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>ExamGuard | Dashboard</title>
+
+<style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+
+/* =====================================================
+   BODY
+===================================================== */
+
+body{
+
+    background:#f1f5f9;
+
+    color:#1e293b;
+
+    min-height:100vh;
+
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header{
+
+    height:75px;
+
+    background:#2563eb;
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 45px;
+
+    box-shadow:0 3px 10px rgba(0,0,0,0.15);
+
+}
+
+
+.logo{
+
+    font-size:25px;
+
+    font-weight:bold;
+
+}
+
+
+.logo span{
+
+    font-weight:normal;
+
+}
+
+
+.header-right{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:25px;
+
+}
+
+
+.welcome{
+
+    font-size:16px;
+
+}
+
+
+.logout{
+
+    text-decoration:none;
+
+    color:white;
+
+    border:1px solid rgba(255,255,255,0.6);
+
+    padding:9px 18px;
+
+    border-radius:7px;
+
+    transition:0.2s;
+
+}
+
+
+.logout:hover{
+
+    background:white;
+
+    color:#2563eb;
+
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.container{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:40px 25px;
+
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero{
+
+    background:white;
+
+    border-radius:15px;
+
+    padding:35px;
+
+    box-shadow:0 3px 12px rgba(0,0,0,0.08);
+
+    margin-bottom:25px;
+
+}
+
+
+.hero h1{
+
+    font-size:32px;
+
+    margin-bottom:10px;
+
+    color:#0f172a;
+
+}
+
+
+.hero p{
+
+    font-size:17px;
+
+    color:#64748b;
+
+    line-height:1.6;
+
+}
+
+
+/* =====================================================
+   INFORMATION CARDS
+===================================================== */
+
+.info-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:20px;
+
+    margin-bottom:25px;
+
+}
+
+
+.info-card{
+
+    background:white;
+
+    border-radius:12px;
+
+    padding:25px;
+
+    box-shadow:
+        0 3px 10px rgba(0,0,0,0.07);
+
+}
+
+
+.info-card h3{
+
+    color:#64748b;
+
+    font-size:15px;
+
+    margin-bottom:12px;
+
+    text-transform:uppercase;
+
+}
+
+
+.info-card .value{
+
+    font-size:26px;
+
+    font-weight:bold;
+
+    color:#2563eb;
+
+}
+
+
+/* =====================================================
+   EXAM CARD
+===================================================== */
+
+.exam-card{
+
+    background:white;
+
+    border-radius:15px;
+
+    padding:35px;
+
+    box-shadow:
+        0 3px 12px rgba(0,0,0,0.08);
+
+    margin-bottom:25px;
+
+}
+
+
+.exam-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+}
+
+
+.exam-header h2{
+
+    font-size:24px;
+
+    color:#0f172a;
+
+}
+
+
+.status{
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+    padding:7px 14px;
+
+    border-radius:20px;
+
+    font-size:14px;
+
+    font-weight:bold;
+
+}
+
+
+/* =====================================================
+   FEATURES
+===================================================== */
+
+.features{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:15px;
+
+    margin-bottom:30px;
+
+}
+
+
+.feature{
+
+    padding:15px;
+
+    background:#f8fafc;
+
+    border-radius:8px;
+
+    border-left:4px solid #2563eb;
+
+}
+
+
+.feature strong{
+
+    display:block;
+
+    margin-bottom:5px;
+
+}
+
+
+.feature span{
+
+    color:#64748b;
+
+    font-size:14px;
+
+}
+
+
+/* =====================================================
+   START + ANALYTICS BUTTONS
+===================================================== */
+
+.start-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.start-btn,
+.analytics-btn {
+    display: inline-block;
+    padding: 13px 25px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    transition: 0.2s;
+}
+
+/* START EXAMINATION */
+
+.start-btn {
+    background-color: #2563eb;
+    color: white !important;
+}
+
+.start-btn:hover {
+    background-color: #1d4ed8;
+}
+
+/* VIEW ANALYTICS */
+
+.analytics-btn {
+    background-color: #1d4ed8 !important;
+    color: white !important;
+}
+
+.analytics-btn:hover {
+    background-color: #1d4ed8 !important;
+}
+
+/* DISABLED */
+
+.analytics-btn:disabled {
+    background-color: #1d4ed8 !important;
+    color: white !important;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* =====================================================
+   SECURITY GUIDELINES
+===================================================== */
+
+.security{
+
+    background:white;
+
+    border-radius:15px;
+
+    padding:30px;
+
+    box-shadow:
+        0 3px 12px rgba(0,0,0,0.08);
+
+}
+
+
+.security h2{
+
+    margin-bottom:20px;
+
+}
+
+
+.guidelines{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:15px;
+
+}
+
+
+.guideline{
+
+    color:#475569;
+
+    padding:12px;
+
+    background:#f8fafc;
+
+    border-radius:8px;
+
+}
+
+
+.guideline::before{
+
+    content:"✓";
+
+    color:#16a34a;
+
+    font-weight:bold;
+
+    margin-right:10px;
+
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer{
+
+    text-align:center;
+
+    padding:25px;
+
+    color:#64748b;
+
+    font-size:14px;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:800px){
+
+    .info-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .features{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .guidelines{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .header{
+
+        padding:0 20px;
+
+    }
+
+    .welcome{
+
+        display:none;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+    <div class="logo">
+
+        🛡 ExamGuard
+
+    </div>
+
+
+    <div class="header-right">
+
+        <div class="welcome">
+
+            Welcome,
+            <strong>{{ candidate }}</strong>
+
+        </div>
+
+
+        <a href="{{ url_for('logout') }}"
+           class="logout">
+
+            Logout
+
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN CONTAINER
+===================================================== -->
+
+<div class="container">
+
+
+    <!-- =================================================
+         HERO
+    ================================================== -->
+
+    <section class="hero">
+
+        <h1>
+
+            Online Examination Portal
+
+        </h1>
+
+
+        <p>
+
+            Welcome to ExamGuard, an AI-assisted
+            secure examination platform designed to
+            monitor examination integrity and provide
+            a reliable online assessment environment.
+
+        </p>
+
+    </section>
+
+
+
+    <!-- =================================================
+         INFORMATION CARDS
+    ================================================== -->
+
+    <section class="info-grid">
+
+
+        <div class="info-card">
+
+            <h3>
+
+                Exam Duration
+
+            </h3>
+
+            <div class="value">
+
+                5 Minutes
+
+            </div>
+
+        </div>
+
+
+
+        <div class="info-card">
+
+            <h3>
+
+                Questions
+
+            </h3>
+
+            <div class="value">
+
+                5
+
+            </div>
+
+        </div>
+
+
+
+        <div class="info-card">
+
+            <h3>
+
+                Monitoring
+
+            </h3>
+
+            <div class="value">
+
+                Active
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         EXAM CARD
+    ================================================== -->
+
+    <section class="exam-card">
+
+
+        <div class="exam-header">
+
+            <h2>
+
+                Ready for Examination
+
+            </h2>
+
+
+            <div class="status">
+
+                ● Monitoring Enabled
+
+            </div>
+
+        </div>
+
+
+
+        <!-- FEATURES -->
+
+        <div class="features">
+
+
+            <div class="feature">
+
+                <strong>
+
+                    📷 Camera Verification
+
+                </strong>
+
+                <span>
+
+                    Candidate identity and camera
+                    availability are verified before
+                    the examination.
+
+                </span>
+
+            </div>
+
+
+
+            <div class="feature">
+
+                <strong>
+
+                    👤 Face Monitoring
+
+                </strong>
+
+                <span>
+
+                    Haar Cascade based face monitoring
+                    detects face absence and multiple
+                    faces.
+
+                </span>
+
+            </div>
+
+
+
+            <div class="feature">
+
+                <strong>
+
+                    🌐 Browser Monitoring
+
+                </strong>
+
+                <span>
+
+                    Suspicious browser activities and
+                    examination interactions are monitored.
+
+                </span>
+
+            </div>
+
+
+
+            <div class="feature">
+
+                <strong>
+
+                    🛡 Integrity Tracking
+
+                </strong>
+
+                <span>
+
+                    Suspicious events can affect the
+                    examination integrity score.
+
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- START BUTTON -->
+
+<div class="start-container">
+
+    <a href="{{ url_for('start_exam') }}"
+       class="start-btn">
+        Start Examination
+    </a>
+
+    {% if latest_session_id %}
+
+        <a href="{{ url_for('analytics', session_id=latest_session_id) }}"
+           class="analytics-btn">
+            View Analytics
+        </a>
+
+    {% else %}
+
+        <button type="button"
+                class="analytics-btn"
+                disabled>
+            View Analytics
+        </button>
+
+    {% endif %}
+
+</div>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         SECURITY GUIDELINES
+    ================================================== -->
+
+    <section class="security">
+
+
+        <h2>
+
+            Examination Guidelines
+
+        </h2>
+
+
+        <div class="guidelines">
+
+
+            <div class="guideline">
+
+                Keep your face clearly visible
+                throughout the examination.
+
+            </div>
+
+
+            <div class="guideline">
+
+                Do not switch browser tabs or
+                applications during the exam.
+
+            </div>
+
+
+            <div class="guideline">
+
+                Do not use external assistance
+                during the examination.
+
+            </div>
+
+
+            <div class="guideline">
+
+                Keep your webcam enabled and
+                properly positioned.
+
+            </div>
+
+
+            <div class="guideline">
+
+                Ensure you have a stable internet
+                connection.
+
+            </div>
+
+
+            <div class="guideline">
+
+                Submit the examination before the
+                timer expires.
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+    ExamGuard — Secure Online Examination System
+
+</footer>
+
+
+</body>
+
+</html>

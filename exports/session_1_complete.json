@@ -1,0 +1,39 @@
+{
+    "session": [
+        {
+            "session_id": 1,
+            "candidate_id": 1,
+            "start_time": "2026-09-03 12:26:17",
+            "end_time": "2026-09-03 12:27:32",
+            "status": "Submitted",
+            "integrity_score": 91
+        }
+    ],
+    "risk_level": null,
+    "cluster": null,
+    "events": [
+        {
+            "event_id": 1,
+            "session_id": 1,
+            "event_type": "Copy Attempt",
+            "timestamp": "2026-09-03 12:27:05",
+            "details": "Browser monitoring violation"
+        },
+        {
+            "event_id": 2,
+            "session_id": 1,
+            "event_type": "Copy Attempt",
+            "timestamp": "2026-09-03 12:27:05",
+            "details": "Browser monitoring violation"
+        },
+        {
+            "event_id": 3,
+            "session_id": 1,
+            "event_type": "Copy Attempt",
+            "timestamp": "2026-09-03 12:27:08",
+            "details": "Browser monitoring violation"
+        }
+    ],
+    "incidents": [],
+    "ai_report": null
+}

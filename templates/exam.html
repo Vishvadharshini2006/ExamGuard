@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>ExamGuard Examination</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    background:#eef2f7;
+}
+
+/* HEADER */
+
+.header{
+
+    background:#2563eb;
+    color:white;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:18px 35px;
+
+}
+
+.header h2{
+    font-size:28px;
+}
+
+.header-right{
+
+    display:flex;
+    gap:35px;
+
+    font-size:18px;
+    font-weight:bold;
+
+}
+
+/* MAIN */
+
+.main{
+
+    display:flex;
+
+    padding:25px;
+
+    gap:25px;
+
+}
+
+.left{
+    flex:3;
+}
+
+.right{
+    flex:1;
+}
+
+/* CARD */
+
+.card{
+
+    background:white;
+
+    border-radius:12px;
+
+    padding:22px;
+
+    margin-bottom:20px;
+
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+
+}
+
+/* QUESTION */
+
+.question-title{
+
+    font-size:24px;
+
+    margin-bottom:20px;
+
+}
+
+.question{
+
+    font-size:22px;
+
+    margin-bottom:25px;
+
+}
+
+.option{
+
+    margin:15px 0;
+
+    font-size:18px;
+
+}
+
+/* CAMERA */
+
+.camera{
+
+    width:100%;
+
+    border-radius:10px;
+
+    border:4px solid #2563eb;
+
+}
+
+/* PALETTE */
+
+.palette{
+
+    display:flex;
+
+    gap:10px;
+
+    flex-wrap:wrap;
+
+}
+
+.palette button{
+
+    width:45px;
+
+    height:45px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#2563eb;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+}
+
+.palette button:hover{
+
+    background:#1d4ed8;
+
+}
+
+/* NAVIGATION */
+
+.navigation{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-top:30px;
+
+}
+
+.navigation button{
+
+    padding:12px 35px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#2563eb;
+
+    color:white;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+}
+
+/* SUBMIT */
+
+.submit{
+
+    width:100%;
+
+    padding:16px;
+
+    background:#16a34a;
+
+    color:white;
+
+    border:none;
+
+    border-radius:10px;
+
+    font-size:20px;
+
+    cursor:pointer;
+
+}
+
+.submit:hover{
+
+    background:#15803d;
+
+}
+
+/* WARNING */
+
+.warning{
+
+    color:red;
+
+    font-weight:bold;
+
+    margin-top:10px;
+
+}
+
+progress{
+
+    width:100%;
+
+    height:20px;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================================================= -->
+<!-- HEADER -->
+<!-- ================================================= -->
+
+<div class="header">
+
+    <h2>
+        ExamGuard Live Examination
+    </h2>
+
+    <div class="header-right">
+
+        <div id="timer">
+            ⏳ --:--
+        </div>
+
+        <div>
+            Integrity :
+            <span id="score">
+                100%
+            </span>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- MAIN -->
+<!-- ================================================= -->
+
+<div class="main">
+
+
+    <!-- ================================================= -->
+    <!-- LEFT -->
+    <!-- ================================================= -->
+
+    <div class="left">
+
+        <div class="card">
+
+            <form
+                action="{{ url_for('save_answer') }}"
+                method="POST"
+            >
+
+                <input
+                    type="hidden"
+                    name="question_id"
+                    value="{{ question[0] }}"
+                >
+
+                <input
+                    type="hidden"
+                    name="question_no"
+                    value="{{ question_no }}"
+                >
+
+
+                <div class="question-title">
+
+                    Question
+                    {{ question_no }}
+                    of
+                    {{ total_questions }}
+
+                </div>
+
+
+                <div class="question">
+
+                    {{ question[1] }}
+
+                </div>
+
+
+                <div class="option">
+
+                    <input
+                        type="radio"
+                        name="answer"
+                        value="A"
+
+                        {% if selected=="A" %}
+                            checked
+                        {% endif %}
+                    >
+
+                    {{ question[2] }}
+
+                </div>
+
+
+                <div class="option">
+
+                    <input
+                        type="radio"
+                        name="answer"
+                        value="B"
+
+                        {% if selected=="B" %}
+                            checked
+                        {% endif %}
+                    >
+
+                    {{ question[3] }}
+
+                </div>
+
+
+                <div class="option">
+
+                    <input
+                        type="radio"
+                        name="answer"
+                        value="C"
+
+                        {% if selected=="C" %}
+                            checked
+                        {% endif %}
+                    >
+
+                    {{ question[4] }}
+
+                </div>
+
+
+                <div class="option">
+
+                    <input
+                        type="radio"
+                        name="answer"
+                        value="D"
+
+                        {% if selected=="D" %}
+                            checked
+                        {% endif %}
+                    >
+
+                    {{ question[5] }}
+
+                </div>
+
+
+                <br>
+
+
+                <!-- QUESTION PROGRESS -->
+
+                <progress
+                    value="{{ attempted }}"
+                    max="{{ total_questions }}"
+                >
+                </progress>
+
+
+                <!-- NAVIGATION -->
+
+                <div class="navigation">
+
+
+                    {% if question_no > 1 %}
+
+                    <button
+                        type="submit"
+                        name="action"
+                        value="previous"
+                        onclick="goToNextQuestion()"
+                    >
+
+                        Previous
+
+                    </button>
+
+                    {% endif %}
+
+
+                    {% if question_no < total_questions %}
+
+                    <button
+                        type="submit"
+                        name="action"
+                        value="next"
+                        onclick="goToNextQuestion()"
+                    >
+
+                        Next
+
+                    </button>
+
+                    {% else %}
+
+                    <button
+                        type="submit"
+                        name="action"
+                        value="submit"
+                        onclick="stopExamMonitoring()"
+                    >
+
+                        Submit Exam
+
+                    </button>
+
+                    {% endif %}
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- QUESTION PALETTE -->
+        <!-- ================================================= -->
+
+        <div class="card">
+
+            <h3>
+                Question Palette
+            </h3>
+
+            <br>
+
+            <div class="palette">
+
+                {% for i in range(1,total_questions+1) %}
+
+                <a
+                    href="{{ url_for('exam',q=i) }}"
+                    onclick="goToNextQuestion()"
+                >
+
+                    <button type="button">
+
+                        {{ i }}
+
+                    </button>
+
+                </a>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- RIGHT -->
+    <!-- ================================================= -->
+
+    <div class="right">
+
+
+        <!-- CAMERA -->
+
+        <div class="card">
+
+            <h3>
+                Live Camera
+            </h3>
+
+            <br>
+
+           <img
+    id="cameraFeed"
+    class="camera"
+    src="{{ url_for('video_feed') }}"
+    alt="Live Camera Feed"
+    onerror="cameraError()"
+>
+
+        </div>
+
+
+        <!-- WARNINGS -->
+
+        <div class="card">
+
+            <h3>
+                Warnings
+            </h3>
+
+            <br>
+
+            <div
+                id="status"
+                class="warning"
+            >
+
+                ✓ No Violations
+
+            </div>
+
+        </div>
+
+
+        <!-- SUBMIT -->
+
+        <div class="card">
+
+            <a
+                href="{{ url_for('submit_exam') }}"
+                onclick="
+                    stopExamMonitoring();
+                    return confirm('Submit Exam?');
+                "
+            >
+
+                <button class="submit">
+
+                    Submit Exam
+
+                </button>
+
+            </a>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- JAVASCRIPT -->
+<!-- ================================================= -->
+
+<script>
+
+
+// =====================================================
+// EXAM STATE
+// =====================================================
+
+let examActive = true;
+
+let pageReady = false;
+
+let navigatingQuestion = false;
+
+
+// =====================================================
+// PAGE READY
+// =====================================================
+
+window.onload = function(){
+
+    setTimeout(function(){
+
+        pageReady = true;
+
+    },1000);
+
+};
+
+
+// =====================================================
+// STOP MONITORING
+// =====================================================
+
+function stopExamMonitoring(){
+
+    examActive = false;
+
+    navigatingQuestion = true;
+
+}
+
+
+// =====================================================
+// QUESTION NAVIGATION
+// =====================================================
+
+function goToNextQuestion(){
+
+    navigatingQuestion = true;
+
+}
+
+
+// =====================================================
+// SHOW VIOLATION
+// =====================================================
+
+function showLiveViolation(eventName){
+
+    const status =
+        document.getElementById("status");
+
+    if(status){
+
+        status.innerHTML =
+            "⚠ " + eventName;
+
+        status.style.color =
+            "#dc2626";
+
+    }
+
+}
+
+
+// =====================================================
+// LOG BROWSER EVENT
+// =====================================================
+
+function logEvent(eventName){
+
+    if(!examActive){
+
+        return;
+
+    }
+
+
+    fetch(
+        "/log_browser_event",
+        {
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":
+                    "application/json"
+            },
+
+            body:JSON.stringify({
+                event:eventName
+            })
+
+        }
+    )
+
+    .then(
+        response => response.json()
+    )
+
+    .then(
+        data => {
+
+            if(!data.success){
+
+                return;
+
+            }
+
+
+            // -----------------------------------------
+            // UPDATE INTEGRITY
+            // -----------------------------------------
+
+            const scoreElement =
+                document.getElementById("score");
+
+
+            if(
+                scoreElement &&
+                data.integrity_score !== undefined
+            ){
+
+                scoreElement.innerText =
+                    data.integrity_score + "%";
+
+            }
+
+
+            // -----------------------------------------
+            // SHOW WARNING
+            // -----------------------------------------
+
+            showLiveViolation(
+                eventName
+            );
+
+        }
+    )
+
+    .catch(
+        error => {
+
+            console.error(
+                "Browser event logging error:",
+                error
+            );
+
+        }
+    );
+
+}
+
+
+// =====================================================
+// TAB SWITCH
+// =====================================================
+
+document.addEventListener(
+    "visibilitychange",
+    function(){
+
+        if(!pageReady){
+
+            return;
+
+        }
+
+
+        if(navigatingQuestion){
+
+            return;
+
+        }
+
+
+        if(
+            document.visibilityState ===
+            "hidden"
+        ){
+
+            logEvent(
+                "Tab Switched"
+            );
+
+        }
+
+    }
+);
+
+
+// =====================================================
+// RIGHT CLICK
+// =====================================================
+
+document.addEventListener(
+    "contextmenu",
+    function(e){
+
+        if(!examActive){
+
+            return;
+
+        }
+
+        e.preventDefault();
+
+        logEvent(
+            "Right Click"
+        );
+
+    }
+);
+
+
+// =====================================================
+// COPY
+// =====================================================
+
+document.addEventListener(
+    "copy",
+    function(e){
+
+        if(!examActive){
+
+            return;
+
+        }
+
+        e.preventDefault();
+
+        logEvent(
+            "Copy Attempt"
+        );
+
+    }
+);
+
+
+// =====================================================
+// PASTE
+// =====================================================
+
+document.addEventListener(
+    "paste",
+    function(e){
+
+        if(!examActive){
+
+            return;
+
+        }
+
+        e.preventDefault();
+
+        logEvent(
+            "Paste Attempt"
+        );
+
+    }
+);
+
+
+// =====================================================
+// KEYBOARD SHORTCUTS
+// =====================================================
+
+document.addEventListener(
+    "keydown",
+    function(e){
+
+        if(!examActive){
+
+            return;
+
+        }
+
+
+        // F12
+
+        if(e.key === "F12"){
+
+            e.preventDefault();
+
+            logEvent(
+                "F12 Pressed"
+            );
+
+        }
+
+
+        // CTRL + SHIFT + I
+
+        if(
+            e.ctrlKey &&
+            e.shiftKey &&
+            e.key.toLowerCase() === "i"
+        ){
+
+            e.preventDefault();
+
+            logEvent(
+                "Developer Tools Attempt"
+            );
+
+        }
+
+
+        // CTRL + U
+
+        if(
+            e.ctrlKey &&
+            e.key.toLowerCase() === "u"
+        ){
+
+            e.preventDefault();
+
+            logEvent(
+                "View Source Attempt"
+            );
+
+        }
+
+    }
+);
+
+
+// =====================================================
+// TIMER
+// =====================================================
+
+const examEnd =
+    new Date(
+        "{{ exam_end }}"
+    ).getTime();
+
+
+function timer(){
+
+    const now =
+        new Date().getTime();
+
+    const diff =
+        examEnd - now;
+
+
+    if(diff <= 0){
+
+        examActive = false;
+
+        window.location =
+            "/submit_exam";
+
+        return;
+
+    }
+
+
+    let minutes =
+        Math.floor(
+            diff / 60000
+        );
+
+
+    let seconds =
+        Math.floor(
+            (diff % 60000) / 1000
+        );
+
+
+    if(seconds < 10){
+
+        seconds =
+            "0" + seconds;
+
+    }
+
+
+    document.getElementById(
+        "timer"
+    ).innerHTML =
+        "⏳ " +
+        minutes +
+        ":" +
+        seconds;
+
+}
+
+
+timer();
+
+setInterval(
+    timer,
+    1000
+);
+
+
+// =====================================================
+// REFRESH WARNING
+// =====================================================
+
+function refreshWarning(){
+
+    if(!examActive){
+
+        return;
+
+    }
+
+
+    fetch(
+        "/get_warning"
+    )
+
+    .then(
+        response =>
+            response.json()
+    )
+
+    .then(
+        data => {
+
+            const status =
+                document.getElementById(
+                    "status"
+                );
+
+
+            if(
+                data.warning &&
+                data.warning !==
+                "No Violations"
+            ){
+
+                status.innerHTML =
+                    data.warning;
+
+                status.style.color =
+                    "#dc2626";
+
+            }
+
+        }
+    )
+
+    .catch(
+        error => {
+
+            console.log(
+                "Warning update error:",
+                error
+            );
+
+        }
+    );
+
+}
+
+
+setInterval(
+    refreshWarning,
+    500
+);
+
+function cameraError(){
+
+    const camera =
+        document.getElementById("cameraFeed");
+
+    if(camera){
+
+        camera.alt =
+            "Camera could not be started";
+
+    }
+
+    console.error(
+        "ExamGuard camera stream could not be loaded."
+    );
+
+}
+
+</script>
+
+</body>
+
+</html>

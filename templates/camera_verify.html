@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ExamGuard | Camera Verification</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Roboto',sans-serif;
+}
+
+
+body{
+
+    background:linear-gradient(135deg,#eef2ff,#dbeafe);
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+}
+
+
+.card{
+
+    width:700px;
+    background:white;
+    padding:40px;
+    border-radius:15px;
+    box-shadow:0 15px 30px rgba(0,0,0,.15);
+    text-align:center;
+
+}
+
+
+h1{
+
+    color:#2563eb;
+    margin-bottom:10px;
+
+}
+
+
+p{
+
+    color:gray;
+    margin-bottom:25px;
+
+}
+
+
+video{
+
+    width:100%;
+    max-width:550px;
+    border-radius:10px;
+    border:3px solid #2563eb;
+
+}
+
+
+button{
+
+    margin-top:25px;
+    padding:14px 40px;
+    background:#2563eb;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:17px;
+    cursor:pointer;
+
+}
+
+
+button:hover{
+
+    background:#1d4ed8;
+
+}
+
+
+#status{
+
+    margin-top:20px;
+    font-weight:bold;
+    color:green;
+
+}
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<div class="card">
+
+
+<h1>Camera Verification</h1>
+
+
+<p>
+Please ensure your face is clearly visible before proceeding.
+</p>
+
+
+<video id="video" autoplay playsinline></video>
+
+
+<canvas id="canvas" style="display:none;"></canvas>
+
+
+<div id="status"></div>
+
+
+<button onclick="capturePhoto()">
+Capture & Continue
+</button>
+
+
+</div>
+
+
+
+<script>
+
+
+const video = document.getElementById("video");
+
+const canvas = document.getElementById("canvas");
+
+const status = document.getElementById("status");
+
+
+
+navigator.mediaDevices.getUserMedia({
+
+    video:true
+
+})
+
+.then(function(stream){
+
+    video.srcObject = stream;
+
+})
+
+.catch(function(){
+
+    alert("Camera permission denied.");
+
+});
+
+
+
+
+function capturePhoto(){
+
+
+    let context = canvas.getContext("2d");
+
+
+    canvas.width = video.videoWidth;
+
+    canvas.height = video.videoHeight;
+
+
+
+    context.drawImage(
+        video,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+
+    status.innerHTML="Capturing photo...";
+
+
+
+    fetch("/capture_photo")
+
+    .then(response=>{
+
+
+        status.innerHTML="Photo captured successfully";
+
+
+        setTimeout(()=>{
+
+            window.location.href="/govt_id";
+
+        },1500);
+
+
+    })
+
+    .catch(error=>{
+
+
+        status.innerHTML="Photo capture failed";
+
+
+    });
+
+
+}
+
+
+
+</script>
+
+
+</body>
+
+</html>

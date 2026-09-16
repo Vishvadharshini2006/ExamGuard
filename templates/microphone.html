@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>ExamGuard | Microphone Verification</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Roboto',sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#eef2ff,#dbeafe);
+}
+
+.card{
+
+width:700px;
+background:white;
+padding:40px;
+border-radius:15px;
+box-shadow:0 15px 30px rgba(0,0,0,.15);
+text-align:center;
+
+}
+
+h1{
+color:#2563eb;
+margin-bottom:15px;
+}
+
+p{
+color:#666;
+margin-bottom:25px;
+}
+
+#status{
+
+margin-top:20px;
+font-size:18px;
+font-weight:bold;
+
+}
+
+button{
+
+margin-top:30px;
+padding:14px 40px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:8px;
+font-size:16px;
+cursor:pointer;
+
+}
+
+button:disabled{
+
+background:gray;
+cursor:not-allowed;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>Microphone Verification</h1>
+
+<p>
+
+Please allow microphone access before entering the examination.
+
+</p>
+
+<button id="checkButton">
+
+Check Microphone
+
+</button>
+
+<div id="status"></div>
+
+<button
+id="continueButton"
+onclick="window.location.href='/exam'"
+disabled>
+
+Proceed to Exam
+
+</button>
+
+</div>
+
+<script>
+
+const status=document.getElementById("status");
+
+const continueBtn=document.getElementById("continueButton");
+
+document.getElementById("checkButton").onclick=function(){
+
+navigator.mediaDevices.getUserMedia({audio:true})
+
+.then(function(stream){
+
+status.innerHTML=" Microphone Access Granted";
+
+status.style.color="green";
+
+continueBtn.disabled=false;
+
+stream.getTracks().forEach(track=>track.stop());
+
+})
+
+.catch(function(){
+
+status.innerHTML=" Microphone Permission Denied";
+
+status.style.color="red";
+
+});
+
+}
+
+</script>
+
+</body>
+
+</html>

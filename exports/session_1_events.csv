@@ -1,0 +1,4 @@
+event_id,session_id,event_type,timestamp,details
+1,1,Copy Attempt,2026-09-03 12:27:05,Browser monitoring violation
+2,1,Copy Attempt,2026-09-03 12:27:05,Browser monitoring violation
+3,1,Copy Attempt,2026-09-03 12:27:08,Browser monitoring violation

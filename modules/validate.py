@@ -1,0 +1,3 @@
+from modules.analytics import validate_synthetic_corpus
+
+validate_synthetic_corpus()

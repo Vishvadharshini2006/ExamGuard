@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Exam Submitted</title>
+
+<style>
+
+body{
+
+    font-family:Arial;
+    background:#f5f7fa;
+    text-align:center;
+    margin-top:100px;
+
+}
+
+.card{
+
+    width:600px;
+    margin:auto;
+    background:white;
+    padding:40px;
+    border-radius:12px;
+    box-shadow:0 0 20px rgba(0,0,0,.1);
+
+}
+
+h1{
+
+    color:#16a34a;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>✅ Exam Submitted Successfully</h1>
+
+<h2>Thank you, {{ candidate }}</h2>
+
+<p>Your responses have been saved.</p>
+
+<p><b>Integrity Score:</b> {{ score }}%</p>
+
+<br>
+
+<a href="/dashboard">
+<button style="
+padding:12px 25px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+">
+Return to Dashboard
+</button>
+</a>
+
+</div>
+
+</body>
+
+</html>

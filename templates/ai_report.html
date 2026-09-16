@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>ExamGuard AI Integrity Assessment</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+            background: #f3f4f6;
+            color: #1f2937;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+
+        /* ================================================= */
+        /* HEADER */
+        /* ================================================= */
+
+        .header {
+            background: #111827;
+            color: white;
+            padding: 30px 34px;
+            border-radius: 14px;
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 4px 14px rgba(0, 0, 0, 0.10);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .header p {
+            margin: 10px 0 0 0;
+            color: #d1d5db;
+            font-size: 15px;
+        }
+
+
+        /* ================================================= */
+        /* SUMMARY CARDS */
+        /* ================================================= */
+
+        .summary-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(180px, 1fr)
+                );
+
+            gap: 16px;
+
+            margin-bottom: 25px;
+        }
+
+        .summary-card {
+            background: white;
+
+            padding: 22px;
+
+            border-radius: 12px;
+
+            border: 1px solid #e5e7eb;
+
+            box-shadow:
+                0 2px 8px
+                rgba(0, 0, 0, 0.06);
+        }
+
+        .summary-card h3 {
+            margin: 0 0 10px 0;
+
+            font-size: 12px;
+
+            color: #6b7280;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.6px;
+        }
+
+        .summary-card .value {
+            font-size: 26px;
+
+            font-weight: 700;
+
+            color: #111827;
+        }
+
+
+        /* ================================================= */
+        /* RISK */
+        /* ================================================= */
+
+        .risk {
+            font-weight: 700;
+        }
+
+        .risk-high {
+            color: #dc2626 !important;
+        }
+
+        .risk-medium {
+            color: #d97706 !important;
+        }
+
+        .risk-low {
+            color: #16a34a !important;
+        }
+
+
+        /* ================================================= */
+        /* GENERAL CARD */
+        /* ================================================= */
+
+        .card {
+            background: white;
+
+            padding: 28px;
+
+            border-radius: 14px;
+
+            margin-bottom: 25px;
+
+            border: 1px solid #e5e7eb;
+
+            box-shadow:
+                0 2px 8px
+                rgba(0, 0, 0, 0.06);
+        }
+
+        .card h2 {
+            margin: 0 0 20px 0;
+
+            color: #111827;
+
+            font-size: 21px;
+
+            font-weight: 700;
+
+            border-bottom:
+                2px solid #f3f4f6;
+
+            padding-bottom: 12px;
+        }
+
+
+        /* ================================================= */
+        /* SESSION INFORMATION */
+        /* ================================================= */
+
+        .session-info-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(250px, 1fr)
+                );
+
+            gap: 15px;
+        }
+
+        .info-item {
+            background: #f9fafb;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 9px;
+
+            padding: 14px 16px;
+        }
+
+        .info-label {
+            display: block;
+
+            font-size: 12px;
+
+            color: #6b7280;
+
+            text-transform: uppercase;
+
+            margin-bottom: 5px;
+
+            font-weight: 600;
+        }
+
+        .info-value {
+            font-size: 15px;
+
+            color: #111827;
+
+            font-weight: 600;
+        }
+
+
+        /* ================================================= */
+        /* AI REPORT */
+        /* ================================================= */
+
+        .report {
+            background: #ffffff;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 10px;
+
+            padding: 30px;
+
+            line-height: 1.7;
+
+            font-size: 15px;
+
+            color: #374151;
+
+            overflow-x: auto;
+        }
+
+
+        /* ================================================= */
+        /* AI REPORT TYPOGRAPHY */
+        /* ================================================= */
+
+        .report h1 {
+            font-size: 27px;
+
+            color: #111827;
+
+            margin-top: 0;
+
+            margin-bottom: 12px;
+
+            font-weight: 700;
+        }
+
+        .report h2 {
+            font-size: 21px;
+
+            color: #111827;
+
+            margin-top: 30px;
+
+            margin-bottom: 15px;
+
+            padding-bottom: 9px;
+
+            border-bottom:
+                2px solid #e5e7eb;
+        }
+
+        .report h3 {
+            font-size: 17px;
+
+            color: #111827;
+
+            margin-top: 22px;
+
+            margin-bottom: 10px;
+        }
+
+        .report p {
+            margin: 10px 0;
+        }
+
+        .report strong {
+            color: #111827;
+
+            font-weight: 700;
+        }
+
+        .report em {
+            color: #4b5563;
+        }
+
+
+        /* ================================================= */
+        /* AI REPORT LISTS */
+        /* ================================================= */
+
+        .report ul,
+        .report ol {
+            margin-top: 8px;
+
+            margin-bottom: 15px;
+
+            padding-left: 28px;
+        }
+
+        .report li {
+            margin-bottom: 7px;
+
+            padding-left: 4px;
+        }
+
+
+        /* ================================================= */
+        /* AI REPORT TABLES */
+        /* ================================================= */
+
+        .report-table-wrapper {
+            width: 100%;
+
+            overflow-x: auto;
+
+            margin: 18px 0 24px 0;
+        }
+
+        .report table {
+            width: 100%;
+
+            min-width: 650px;
+
+            border-collapse: collapse;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 8px;
+
+            overflow: hidden;
+        }
+
+        .report th {
+            background: #f3f4f6;
+
+            color: #111827;
+
+            font-weight: 700;
+
+            text-align: left;
+
+            padding: 12px 14px;
+
+            border-bottom:
+                2px solid #d1d5db;
+
+            font-size: 13px;
+        }
+
+        .report td {
+            padding: 12px 14px;
+
+            border-bottom:
+                1px solid #e5e7eb;
+
+            font-size: 14px;
+
+            vertical-align: top;
+        }
+
+        .report tr:last-child td {
+            border-bottom: none;
+        }
+
+        .report tr:nth-child(even) {
+            background: #fafafa;
+        }
+
+
+        /* ================================================= */
+        /* BLOCKQUOTE / NOTES */
+        /* ================================================= */
+
+        .report blockquote {
+            margin: 20px 0;
+
+            padding: 15px 18px;
+
+            background: #f9fafb;
+
+            border-left:
+                4px solid #6b7280;
+
+            border-radius: 6px;
+
+            color: #4b5563;
+        }
+
+
+        /* ================================================= */
+        /* HORIZONTAL LINE */
+        /* ================================================= */
+
+        .report hr {
+            border: 0;
+
+            border-top:
+                1px solid #e5e7eb;
+
+            margin: 25px 0;
+        }
+
+
+        /* ================================================= */
+        /* FINAL RECOMMENDATION */
+        /* ================================================= */
+
+        .recommendation-box {
+            margin-top: 25px;
+
+            padding: 18px 20px;
+
+            border-radius: 10px;
+
+            background: #fffbeb;
+
+            border:
+                1px solid #fde68a;
+        }
+
+        .recommendation-title {
+            font-weight: 700;
+
+            color: #92400e;
+
+            font-size: 16px;
+
+            margin-bottom: 7px;
+        }
+
+
+        /* ================================================= */
+        /* INCIDENT SUMMARY */
+        /* ================================================= */
+
+        .incident-summary {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(180px, 1fr)
+                );
+
+            gap: 15px;
+        }
+
+        .incident-stat {
+            background: #f9fafb;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 9px;
+
+            padding: 17px;
+        }
+
+        .incident-stat-label {
+            font-size: 12px;
+
+            color: #6b7280;
+
+            text-transform: uppercase;
+
+            font-weight: 600;
+
+            margin-bottom: 6px;
+        }
+
+        .incident-stat-value {
+            font-size: 22px;
+
+            color: #111827;
+
+            font-weight: 700;
+        }
+
+
+        /* ================================================= */
+        /* INCIDENT TABLE */
+        /* ================================================= */
+
+        .incident-table-wrapper {
+            overflow-x: auto;
+        }
+
+        .incident-table {
+            width: 100%;
+
+            min-width: 700px;
+
+            border-collapse: collapse;
+
+            margin-top: 10px;
+        }
+
+        .incident-table th,
+        .incident-table td {
+            padding: 12px;
+
+            border-bottom:
+                1px solid #e5e7eb;
+
+            text-align: left;
+
+            font-size: 14px;
+        }
+
+        .incident-table th {
+            background: #f3f4f6;
+
+            color: #111827;
+
+            font-weight: 700;
+        }
+
+
+        /* ================================================= */
+        /* SEVERITY */
+        /* ================================================= */
+
+        .severity-high {
+            color: #dc2626;
+
+            font-weight: 700;
+        }
+
+        .severity-medium {
+            color: #d97706;
+
+            font-weight: 700;
+        }
+
+        .severity-low {
+            color: #16a34a;
+
+            font-weight: 700;
+        }
+
+
+        /* ================================================= */
+        /* EVIDENCE */
+        /* ================================================= */
+
+        .evidence-yes {
+            color: #15803d;
+
+            font-weight: 700;
+        }
+
+        .evidence-no {
+            color: #6b7280;
+
+            font-weight: 600;
+        }
+
+
+        /* ================================================= */
+        /* ERROR */
+        /* ================================================= */
+
+        .error {
+            background: #fee2e2;
+
+            color: #991b1b;
+
+            border:
+                1px solid #fecaca;
+
+            padding: 15px 18px;
+
+            border-radius: 9px;
+
+            margin-bottom: 20px;
+
+            font-weight: 600;
+        }
+
+
+        /* ================================================= */
+        /* BUTTONS */
+        /* ================================================= */
+
+        .actions {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 12px;
+
+            margin-top: 10px;
+
+            margin-bottom: 40px;
+        }
+
+        .button {
+            display: inline-block;
+
+            padding: 12px 19px;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            font-weight: 700;
+
+            font-size: 14px;
+
+            background: #111827;
+
+            color: white;
+
+            transition:
+                opacity 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .button:hover {
+            opacity: 0.9;
+
+            transform: translateY(-1px);
+        }
+
+        .button-secondary {
+            background: #4b5563;
+        }
+
+
+        /* ================================================= */
+        /* FOOTER */
+        /* ================================================= */
+
+        .footer {
+            text-align: center;
+
+            color: #6b7280;
+
+            font-size: 12px;
+
+            margin-top: 15px;
+
+            margin-bottom: 30px;
+        }
+
+
+        /* ================================================= */
+        /* PRINT */
+        /* ================================================= */
+
+        @media print {
+
+            body {
+                background: white;
+            }
+
+            .container {
+                width: 100%;
+
+                max-width: none;
+
+                margin: 0;
+            }
+
+            .header {
+                box-shadow: none;
+
+                border-radius: 0;
+            }
+
+            .card,
+            .summary-card {
+                box-shadow: none;
+
+                break-inside: avoid;
+            }
+
+            .actions {
+                display: none;
+            }
+
+            .footer {
+                display: none;
+            }
+
+        }
+
+
+        /* ================================================= */
+        /* RESPONSIVE */
+        /* ================================================= */
+
+        @media (max-width: 600px) {
+
+            .container {
+                width: 95%;
+
+                margin: 20px auto;
+            }
+
+            .header {
+                padding: 23px;
+            }
+
+            .header h1 {
+                font-size: 23px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .report {
+                padding: 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- ================================================= -->
+    <!-- HEADER -->
+    <!-- ================================================= -->
+
+    <div class="header">
+
+        <h1>
+            ExamGuard AI Integrity Assessment
+        </h1>
+
+        {% if session_data %}
+
+            <p>
+                AI-generated examination integrity
+                assessment for Session
+                {{ session_data.session_information.session_id }}
+            </p>
+
+        {% else %}
+
+            <p>
+                Examination integrity assessment
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- ERROR -->
+    <!-- ================================================= -->
+
+    {% if error %}
+
+        <div class="error">
+            {{ error }}
+        </div>
+
+    {% endif %}
+
+
+    {% if session_data %}
+
+
+        <!-- ================================================= -->
+        <!-- SUMMARY -->
+        <!-- ================================================= -->
+
+        <div class="summary-grid">
+
+
+            <!-- SESSION -->
+
+            <div class="summary-card">
+
+                <h3>
+                    Session ID
+                </h3>
+
+                <div class="value">
+
+                    {{ session_data.session_information.session_id }}
+
+                </div>
+
+            </div>
+
+
+            <!-- SCORE -->
+
+            <div class="summary-card">
+
+                <h3>
+                    Integrity Score
+                </h3>
+
+                <div class="value">
+
+                    {{ session_data.official_integrity_score }}
+                    <span style="font-size:14px;color:#6b7280;">
+                        / 100
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- RISK -->
+
+            <div class="summary-card">
+
+                <h3>
+                    Risk Level
+                </h3>
+
+                <div class="
+                    value
+                    risk
+                    {% if session_data.risk_level == 'High Risk' %}
+                        risk-high
+                    {% elif session_data.risk_level == 'Medium Risk' %}
+                        risk-medium
+                    {% elif session_data.risk_level == 'Low Risk' %}
+                        risk-low
+                    {% endif %}
+                ">
+
+                    {{ session_data.risk_level }}
+
+                </div>
+
+            </div>
+
+
+            <!-- EVENTS -->
+
+            <div class="summary-card">
+
+                <h3>
+                    Total Events
+                </h3>
+
+                <div class="value">
+
+                    {{ session_data.total_events }}
+
+                </div>
+
+            </div>
+
+
+            <!-- INCIDENTS -->
+
+            <div class="summary-card">
+
+                <h3>
+                    Incidents
+                </h3>
+
+                <div class="value">
+
+                    {{ session_data.incident_count }}
+
+                </div>
+
+            </div>
+
+
+            <!-- FACE PRESENCE -->
+
+            <div class="summary-card">
+
+                <h3>
+                    Face Presence
+                </h3>
+
+                <div class="value">
+
+                    {{ session_data.face_presence_percentage }}%
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- SESSION INFORMATION -->
+        <!-- ================================================= -->
+
+        <div class="card">
+
+            <h2>
+                Session Information
+            </h2>
+
+            <div class="session-info-grid">
+
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Session ID
+                    </span>
+
+                    <span class="info-value">
+                        {{ session_data.session_information.session_id }}
+                    </span>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Candidate ID
+                    </span>
+
+                    <span class="info-value">
+                        {{ session_data.session_information.candidate_id }}
+                    </span>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Start Time
+                    </span>
+
+                    <span class="info-value">
+                        {{ session_data.session_information.start_time }}
+                    </span>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        End Time
+                    </span>
+
+                    <span class="info-value">
+                        {{ session_data.session_information.end_time }}
+                    </span>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Status
+                    </span>
+
+                    <span class="info-value">
+                        {{ session_data.session_information.status }}
+                    </span>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- AI REPORT -->
+        <!-- ================================================= -->
+
+        {% if report %}
+
+            <div class="card">
+
+                <h2>
+                    AI Integrity Assessment
+                </h2>
+
+                <div
+                    id="ai-report"
+                    class="report"
+                >
+                </div>
+
+
+                <!-- Raw report kept hidden -->
+
+                <textarea
+                    id="raw-report"
+                    style="display:none;"
+                >{{ report }}</textarea>
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- ================================================= -->
+        <!-- INCIDENT SUMMARY -->
+        <!-- ================================================= -->
+
+        <div class="card">
+
+            <h2>
+                Incident Summary
+            </h2>
+
+            <div class="incident-summary">
+
+
+                <div class="incident-stat">
+
+                    <div class="incident-stat-label">
+                        Total Incidents
+                    </div>
+
+                    <div class="incident-stat-value">
+
+                        {{ session_data.evidence_summary.total_incidents }}
+
+                    </div>
+
+                </div>
+
+
+                <div class="incident-stat">
+
+                    <div class="incident-stat-label">
+                        Evidence Available
+                    </div>
+
+                    <div class="incident-stat-value">
+
+                        {{ session_data.evidence_summary.incidents_with_evidence }}
+
+                    </div>
+
+                </div>
+
+
+                <div class="incident-stat">
+
+                    <div class="incident-stat-label">
+                        Incidents Without Evidence
+                    </div>
+
+                    <div class="incident-stat-value">
+
+                        {{
+                            session_data.evidence_summary.total_incidents
+                            -
+                            session_data.evidence_summary.incidents_with_evidence
+                        }}
+
+                    </div>
+
+                </div>
+
+
+                <div class="incident-stat">
+
+                    <div class="incident-stat-label">
+                        Evidence Recorded
+                    </div>
+
+                    <div class="incident-stat-value">
+
+                        {% if session_data.evidence_summary.evidence_available %}
+                            Yes
+                        {% else %}
+                            No
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- RECORDED INCIDENTS -->
+        <!-- ================================================= -->
+
+        {% if session_data.incidents %}
+
+            <div class="card">
+
+                <h2>
+                    Recorded Incidents
+                </h2>
+
+                <div class="incident-table-wrapper">
+
+                    <table class="incident-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Incident ID
+                                </th>
+
+                                <th>
+                                    Event
+                                </th>
+
+                                <th>
+                                    Timestamp
+                                </th>
+
+                                <th>
+                                    Severity
+                                </th>
+
+                                <th>
+                                    Evidence
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                        {% for incident in session_data.incidents %}
+
+                            <tr>
+
+                                <td>
+                                    {{ incident.incident_id }}
+                                </td>
+
+                                <td>
+                                    {{ incident.event_type }}
+                                </td>
+
+                                <td>
+                                    {{ incident.timestamp }}
+                                </td>
+
+                                <td>
+
+                                    {% if incident.severity == "High" %}
+
+                                        <span class="severity-high">
+                                            High
+                                        </span>
+
+                                    {% elif incident.severity == "Medium" %}
+
+                                        <span class="severity-medium">
+                                            Medium
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="severity-low">
+                                            {{ incident.severity }}
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+                                <td>
+
+                                    {% if incident.evidence_available %}
+
+                                        <span class="evidence-yes">
+                                            Available
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="evidence-no">
+                                            Not Available
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+                                <td>
+                                    {{ incident.status }}
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- ================================================= -->
+        <!-- ACTION BUTTONS -->
+        <!-- ================================================= -->
+
+        <div class="actions">
+
+
+            <a
+                href="{{ url_for(
+                    'analytics',
+                    session_id=session_data.session_information.session_id
+                ) }}"
+                class="button"
+            >
+                ← Back to Analytics
+            </a>
+
+
+            <a
+                href="{{ url_for(
+                    'incidents',
+                    session_id=session_data.session_information.session_id
+                ) }}"
+                class="button button-secondary"
+            >
+                View Incident Management
+            </a>
+
+
+            <button
+                onclick="window.print()"
+                class="button"
+                style="border:none;cursor:pointer;"
+            >
+                Print Report
+            </button>
+
+
+        </div>
+
+
+    {% endif %}
+
+
+    <!-- ================================================= -->
+    <!-- FOOTER -->
+    <!-- ================================================= -->
+
+    <div class="footer">
+
+        ExamGuard AI-Assisted Examination Integrity
+        Assessment System
+
+    </div>
+
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- MARKDOWN RENDERER -->
+<!-- ===================================================== -->
+
+<script>
+
+function escapeHTML(text) {
+
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+function renderInlineMarkdown(text) {
+
+    text = escapeHTML(text);
+
+    /* Bold */
+
+    text = text.replace(
+        /\*\*(.*?)\*\*/g,
+        "<strong>$1</strong>"
+    );
+
+    /* Italic */
+
+    text = text.replace(
+        /(?<!\*)\*(?!\*)(.*?)\*(?!\*)/g,
+        "<em>$1</em>"
+    );
+
+    /* Inline code */
+
+    text = text.replace(
+        /`([^`]+)`/g,
+        "<code>$1</code>"
+    );
+
+    return text;
+
+}
+
+
+function renderMarkdown(markdown) {
+
+    const lines =
+        markdown
+            .replace(/\r\n/g, "\n")
+            .split("\n");
+
+    let html = "";
+
+    let inTable = false;
+
+    let tableHeader = false;
+
+    let inUL = false;
+
+    let inOL = false;
+
+
+    function closeLists() {
+
+        if (inUL) {
+
+            html += "</ul>";
+
+            inUL = false;
+
+        }
+
+        if (inOL) {
+
+            html += "</ol>";
+
+            inOL = false;
+
+        }
+
+    }
+
+
+    function closeTable() {
+
+        if (inTable) {
+
+            html += "</tbody></table></div>";
+
+            inTable = false;
+
+            tableHeader = false;
+
+        }
+
+    }
+
+
+    for (let i = 0; i < lines.length; i++) {
+
+        let line = lines[i];
+
+        let trimmed = line.trim();
+
+
+        /* Empty line */
+
+        if (trimmed === "") {
+
+            closeLists();
+
+            continue;
+
+        }
+
+
+        /* Horizontal rule */
+
+        if (/^(\-{3,}|\*{3,}|_{3,})$/.test(trimmed)) {
+
+            closeLists();
+
+            closeTable();
+
+            html += "<hr>";
+
+            continue;
+
+        }
+
+
+        /* Heading 1 */
+
+        if (/^# /.test(trimmed)) {
+
+            closeLists();
+
+            closeTable();
+
+            html +=
+                "<h1>" +
+                renderInlineMarkdown(
+                    trimmed.substring(2)
+                ) +
+                "</h1>";
+
+            continue;
+
+        }
+
+
+        /* Heading 2 */
+
+        if (/^## /.test(trimmed)) {
+
+            closeLists();
+
+            closeTable();
+
+            html +=
+                "<h2>" +
+                renderInlineMarkdown(
+                    trimmed.substring(3)
+                ) +
+                "</h2>";
+
+            continue;
+
+        }
+
+
+        /* Heading 3 */
+
+        if (/^### /.test(trimmed)) {
+
+            closeLists();
+
+            closeTable();
+
+            html +=
+                "<h3>" +
+                renderInlineMarkdown(
+                    trimmed.substring(4)
+                ) +
+                "</h3>";
+
+            continue;
+
+        }
+
+
+        /* Blockquote */
+
+        if (/^> /.test(trimmed)) {
+
+            closeLists();
+
+            closeTable();
+
+            html +=
+                "<blockquote>" +
+                renderInlineMarkdown(
+                    trimmed.substring(2)
+                ) +
+                "</blockquote>";
+
+            continue;
+
+        }
+
+
+        /* Table */
+
+        if (trimmed.startsWith("|") && trimmed.endsWith("|")) {
+
+            const cells =
+                trimmed
+                    .split("|")
+                    .slice(1, -1)
+                    .map(cell => cell.trim());
+
+
+            /* Separator row */
+
+            const isSeparator =
+                cells.every(
+                    cell =>
+                        /^:?-+:?$/.test(cell)
+                );
+
+
+            if (isSeparator) {
+
+                tableHeader = true;
+
+                continue;
+
+            }
+
+
+            if (!inTable) {
+
+                closeLists();
+
+                html +=
+                    '<div class="report-table-wrapper">' +
+                    '<table>' +
+                    '<thead>';
+
+                html += "<tr>";
+
+                cells.forEach(cell => {
+
+                    html +=
+                        "<th>" +
+                        renderInlineMarkdown(cell) +
+                        "</th>";
+
+                });
+
+                html += "</tr>";
+
+                html += "</thead><tbody>";
+
+                inTable = true;
+
+                continue;
+
+            }
+
+
+            html += "<tr>";
+
+            cells.forEach(cell => {
+
+                html +=
+                    "<td>" +
+                    renderInlineMarkdown(cell) +
+                    "</td>";
+
+            });
+
+            html += "</tr>";
+
+            continue;
+
+        }
+
+
+        /* Close table when normal text begins */
+
+        if (inTable) {
+
+            closeTable();
+
+        }
+
+
+        /* Unordered list */
+
+        if (/^[-*] /.test(trimmed)) {
+
+            if (!inUL) {
+
+                closeLists();
+
+                html += "<ul>";
+
+                inUL = true;
+
+            }
+
+            html +=
+                "<li>" +
+                renderInlineMarkdown(
+                    trimmed.substring(2)
+                ) +
+                "</li>";
+
+            continue;
+
+        }
+
+
+        /* Ordered list */
+
+        if (/^\d+\.\s/.test(trimmed)) {
+
+            if (!inOL) {
+
+                closeLists();
+
+                html += "<ol>";
+
+                inOL = true;
+
+            }
+
+            html +=
+                "<li>" +
+                renderInlineMarkdown(
+                    trimmed.replace(
+                        /^\d+\.\s/,
+                        ""
+                    )
+                ) +
+                "</li>";
+
+            continue;
+
+        }
+
+
+        /* Normal paragraph */
+
+        closeLists();
+
+        html +=
+            "<p>" +
+            renderInlineMarkdown(trimmed) +
+            "</p>";
+
+    }
+
+
+    closeLists();
+
+    closeTable();
+
+    return html;
+
+}
+
+
+/* ===================================================== */
+/* RENDER AI REPORT */
+/* ===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const rawReport =
+            document.getElementById("raw-report");
+
+        const reportContainer =
+            document.getElementById("ai-report");
+
+
+        if (
+            rawReport &&
+            reportContainer
+        ) {
+
+            const markdown =
+                rawReport.value;
+
+            reportContainer.innerHTML =
+                renderMarkdown(markdown);
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Incident Management</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            color: #222;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1400px;
+            margin: 30px auto;
+        }
+
+        h1 {
+            margin-bottom: 5px;
+        }
+
+        .session-info {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        /* ---------------- SUMMARY CARDS ---------------- */
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .summary-card h2 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .summary-card p {
+            margin: 8px 0 0;
+            color: #666;
+        }
+
+        /* ---------------- TABLE CARD ---------------- */
+
+        .table-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1000px;
+        }
+
+        th {
+            background: #f1f3f5;
+            padding: 14px;
+            text-align: left;
+            border-bottom: 2px solid #ddd;
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
+        }
+
+        tr:hover {
+            background: #fafafa;
+        }
+
+        /* ---------------- SEVERITY ---------------- */
+
+        .severity {
+            font-weight: bold;
+            padding: 6px 10px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        .high {
+            background: #ffdddd;
+            color: #c62828;
+        }
+
+        .medium {
+            background: #fff0c2;
+            color: #9a6700;
+        }
+
+        .low {
+            background: #ddf5df;
+            color: #2e7d32;
+        }
+
+        /* ---------------- STATUS ---------------- */
+
+        .status {
+            font-weight: bold;
+        }
+
+        /* ---------------- EVIDENCE BUTTON ---------------- */
+
+        .evidence-btn {
+            display: inline-block;
+            padding: 8px 14px;
+            background: #1976d2;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .evidence-btn:hover {
+            background: #125aa0;
+        }
+
+        .no-evidence {
+            color: #888;
+            font-style: italic;
+        }
+
+        /* ---------------- ACTION ---------------- */
+
+        .action-form {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        select {
+            padding: 7px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 7px 12px;
+            border: none;
+            border-radius: 5px;
+            background: #333;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #111;
+        }
+
+        /* ---------------- EMPTY ---------------- */
+
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #777;
+        }
+
+        /* ---------------- RESPONSIVE ---------------- */
+
+        @media (max-width: 1000px) {
+            .summary {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Incident Management</h1>
+
+    <div class="session-info">
+        Session ID: <strong>{{ session_id }}</strong>
+    </div>
+
+    <!-- ================= SUMMARY ================= -->
+
+    <div class="summary">
+
+        <div class="summary-card">
+            <h2>{{ summary.total }}</h2>
+            <p>Total Incidents</p>
+        </div>
+
+        <div class="summary-card">
+            <h2>{{ summary.high }}</h2>
+            <p>High</p>
+        </div>
+
+        <div class="summary-card">
+            <h2>{{ summary.medium }}</h2>
+            <p>Medium</p>
+        </div>
+
+        <div class="summary-card">
+            <h2>{{ summary.low }}</h2>
+            <p>Low</p>
+        </div>
+
+        <div class="summary-card">
+            <h2>{{ summary.pending }}</h2>
+            <p>Pending</p>
+        </div>
+
+        <div class="summary-card">
+            <h2>{{ summary.reviewed }}</h2>
+            <p>Reviewed</p>
+        </div>
+
+    </div>
+
+    <!-- ================= INCIDENT TABLE ================= -->
+
+    <div class="table-card">
+
+        {% if incidents %}
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Event</th>
+                    <th>Timestamp</th>
+                    <th>Severity</th>
+                    <th>Details</th>
+                    <th>Evidence</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+            {% for incident in incidents %}
+
+                <tr>
+
+                    <!-- ID -->
+                    <td>
+                        {{ incident.incident_id }}
+                    </td>
+
+                    <!-- EVENT -->
+                    <td>
+                        <strong>{{ incident.event_type }}</strong>
+                    </td>
+
+                    <!-- TIMESTAMP -->
+                    <td>
+                        {{ incident.timestamp }}
+                    </td>
+
+                    <!-- SEVERITY -->
+                    <td>
+
+                        {% if incident.severity == "High" %}
+
+                            <span class="severity high">
+                                High
+                            </span>
+
+                        {% elif incident.severity == "Medium" %}
+
+                            <span class="severity medium">
+                                Medium
+                            </span>
+
+                        {% else %}
+
+                            <span class="severity low">
+                                Low
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <!-- DETAILS -->
+                    <td>
+                        {{ incident.details or "No details" }}
+                    </td>
+
+                    <!-- ================= EVIDENCE ================= -->
+
+                    <td>
+
+                        {% if incident.evidence_path %}
+
+                            <a
+                                href="{{ url_for('view_evidence', incident_id=incident.incident_id) }}"
+                                target="_blank"
+                                class="evidence-btn"
+                            >
+                                 View Evidence
+                            </a>
+
+                        {% else %}
+
+                            <span class="no-evidence">
+                                No evidence
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <!-- STATUS -->
+                    <td>
+                        <span class="status">
+                            {{ incident.status }}
+                        </span>
+                    </td>
+
+                    <!-- ACTION -->
+                    <td>
+
+                        <form
+                            method="POST"
+                            action="{{ url_for('update_incident', incident_id=incident.incident_id) }}"
+                            class="action-form"
+                        >
+
+                            <select name="status">
+
+                                <option
+                                    value="Pending"
+                                    {% if incident.status == "Pending" %}
+                                    selected
+                                    {% endif %}
+                                >
+                                    Pending
+                                </option>
+
+                                <option
+                                    value="Reviewed"
+                                    {% if incident.status == "Reviewed" %}
+                                    selected
+                                    {% endif %}
+                                >
+                                    Reviewed
+                                </option>
+
+                                <option
+                                    value="Dismissed"
+                                    {% if incident.status == "Dismissed" %}
+                                    selected
+                                    {% endif %}
+                                >
+                                    Dismissed
+                                </option>
+
+                            </select>
+
+                            <button type="submit">
+                                Update
+                            </button>
+
+                        </form>
+
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        {% else %}
+
+            <div class="empty">
+                No incidents recorded for this session.
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

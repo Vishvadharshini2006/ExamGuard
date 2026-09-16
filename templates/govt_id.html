@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>ExamGuard | Government ID Verification</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Roboto',sans-serif;
+}
+
+body{
+
+background:linear-gradient(135deg,#eef2ff,#dbeafe);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+height:100vh;
+
+}
+
+.card{
+
+width:650px;
+
+background:white;
+
+padding:40px;
+
+border-radius:15px;
+
+box-shadow:0 15px 30px rgba(0,0,0,.15);
+
+text-align:center;
+
+}
+
+h1{
+
+color:#2563eb;
+
+margin-bottom:15px;
+
+}
+
+p{
+
+color:#666;
+
+margin-bottom:30px;
+
+}
+
+input[type=file]{
+
+margin:20px;
+
+}
+
+img{
+
+margin-top:20px;
+
+max-width:350px;
+
+display:none;
+
+border-radius:10px;
+
+border:2px solid #2563eb;
+
+}
+
+button{
+
+margin-top:30px;
+
+padding:13px 40px;
+
+background:#2563eb;
+
+color:white;
+
+border:none;
+
+border-radius:8px;
+
+font-size:16px;
+
+cursor:pointer;
+
+}
+
+button:hover{
+
+background:#1d4ed8;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h1> ID Verification</h1>
+
+<p>
+
+Upload a valid ID proof before starting the examination.
+
+</p>
+
+<form method="POST" enctype="multipart/form-data">
+
+<input
+type="file"
+name="govt_id"
+accept="image/*"
+required
+onchange="previewImage(event)"
+>
+
+<br>
+
+<img id="preview">
+
+<br>
+
+<button type="submit">
+
+Continue
+
+</button>
+
+</form>
+
+</div>
+
+<script>
+
+function previewImage(event){
+
+let image=document.getElementById("preview");
+
+image.src=URL.createObjectURL(event.target.files[0]);
+
+image.style.display="block";
+
+}
+
+</script>
+
+</body>
+
+</html>
