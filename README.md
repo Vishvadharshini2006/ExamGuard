@@ -147,19 +147,6 @@ ExamGuard/
     ├── Project-Documentation.md
     └── Agile-Documentation.md
 ```
-
-## Important Files
-
-* `app.py` – Main Flask application.
-* `config.py` – Application configuration.
-* `database.py` – SQLite database operations.
-* `streamlit_app.py` – Streamlit analytics dashboard.
-* `modules/face_monitor.py` – Face monitoring functionality.
-* `modules/analytics.py` – Examination analytics and K-Means clustering.
-* `modules/ai_report.py` – AI-based integrity report generation.
-* `modules/incident_manager.py` – Incident and evidence management.
-* `requirements.txt` – Python dependencies.
-
 ## Documentation
 
 Detailed project documentation is available in the `docs` directory.
@@ -330,92 +317,10 @@ The current penalty values are:
 
 The recorded penalties are used to calculate the examination integrity score.
 
-## Data Science Analysis
-
-ExamGuard uses K-Means clustering to group examination sessions based on recorded activity patterns.
-
-The clustering process considers features such as:
-
-* Integrity score
-* Total recorded events
-* Browser activity counts
-* Face-related activity
-* Face presence ratio
-
-The analysis helps organize examination sessions into different activity patterns for further review.
-
-## Evidence and Incident Management
-
-ExamGuard provides an incident management workflow for recorded examination events.
-
-Each incident can be assigned one of the following statuses:
-
-* Pending
-* Reviewed
-* Dismissed
-
-Supporting evidence can be associated with an incident and stored for later examination.
-
-This provides a structured way to review examination events and their supporting information.
-
-## Data and Privacy
-
-ExamGuard processes examination-related information such as:
-
-* Face monitoring events
-* Browser activity events
-* Integrity scores
-* Incident information
-* Supporting evidence
-* Examination analytics
-* Generated reports
-
-Sensitive configuration information such as API keys should not be stored in the GitHub repository.
-
-ExamGuard is designed as an assistive monitoring platform. Final examination decisions should remain under appropriate human review.
-
-## Project Scope
-
-ExamGuard focuses on providing an integrated platform for online examination monitoring, event recording, analysis, incident management, and reporting.
-
-The current implementation demonstrates:
-
-* Online examination functionality
-* Face presence monitoring
-* Browser activity monitoring
-* Integrity score calculation
-* Incident and evidence management
-* Data Science-based activity analysis
-* K-Means clustering
-* AI-based reporting
-* Streamlit analytics dashboard
-* Examination data export
-
-## Future Improvements
-
-Potential future improvements include:
-
-* Advanced face recognition and identity verification
-* Improved browser activity monitoring
-* Real-time notification mechanisms
-* More advanced anomaly detection
-* Additional machine learning models
-* Improved dashboard visualizations
-* Cloud-based deployment
-* Scalable multi-user examination management
-* Enhanced evidence storage and management
-
 ## Project Status
 
 ExamGuard is an academic project developed as a Smart Examination Monitoring Platform with Integrity Analysis and Reporting capabilities.
-
 The current implementation integrates examination monitoring, event capture, integrity analysis, incident management, Data Science analytics, AI-based reporting, and dashboard visualization into a single platform.
-
-## Authors
-
-* Vishva Dharshini R.
-* B.Tech Artificial Intelligence and Data Science
-* Panimalar Engineering College
 
 ## License
 
